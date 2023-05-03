@@ -11,5 +11,5 @@ function init() {
 
 function updateHornImage(horn){
   var image = document.querySelector("img");
-  image.src = "/assets/images/" + horn + ".svg";
+  image.setAttribute("src", "/assets/images/" + horn + ".svg");
 }
