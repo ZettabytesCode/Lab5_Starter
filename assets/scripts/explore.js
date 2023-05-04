@@ -9,21 +9,43 @@ speakButton.addEventListener('click', speakText);
 setInterval(faceSwap, 500);
 
 function init() {
-  const voices = speechSynthesis.getVoices();
-  for(let i = 0; i < voices.length; i++){
-    const voice_option = document.createElement("voice_option");
-    voice_option.textContent = `${voices[i].name} (${voices[i].lang})`;
+  
+}
 
-    voice_option.setAttribute("lang", voices[i].lang);
-    voice_option.setAttribute("name", voices[i].name);
-
-    document.getElementById("voice-select").appendChild(voice_option);
+function populateVoiceList() {
+  if (typeof synth === "undefined") {
+    return;
   }
+
+  const voices = synth.getVoices();
+
+  for (let i = 0; i < voices.length; i++) {
+    const option = document.createElement("option");
+    option.textContent = `${voices[i].name} (${voices[i].lang})`;
+
+    if (voices[i].default) {
+      option.textContent += " — DEFAULT";
+    }
+
+    option.setAttribute("data-lang", voices[i].lang);
+    option.setAttribute("data-name", voices[i].name);
+    document.getElementById("voiceSelect").appendChild(option);
+  }
+}
+
+populateVoiceList();
+if (
+  typeof synth !== "undefined" &&
+  synth.onvoiceschanged !== undefined
+) {
+  synth.onvoiceschanged = populateVoiceList;
 }
 
 function speakText(event){
   const text = document.querySelector("textarea");
   const utterance = new SpeechSynthesisUtterance(text.value);
+  document.getElementById("voice-select").selectedOptions[0];
+
   synth.speak(utterance);
 }
 
