@@ -1,6 +1,7 @@
 // expose.js
 
 window.addEventListener('DOMContentLoaded', init);
+function init() {
 
 const jsConfetti = new JSConfetti();
 
@@ -13,10 +14,7 @@ volumeController.addEventListener('input', updateVolume);
 const audioPlay = document.querySelector("button");
 audioPlay.addEventListener('click', playAudio);
 
-function init() {
-  var audio = document.querySelector("audio");
-  audio.volume = 0.5;
-}
+  
 
 function updateHornImage(event){
   var image = document.querySelector("img");
@@ -46,4 +44,5 @@ function playAudio(event) {
   if(hornSelector.value == "party-horn"){
     jsConfetti.addConfetti();
   }
+}
 }
