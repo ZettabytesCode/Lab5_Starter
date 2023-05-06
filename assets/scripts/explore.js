@@ -7,12 +7,12 @@ window.addEventListener('DOMContentLoaded', init);
 function init() {
   const speechSynthesis = window.speechSynthesis;
   speechSynthesis.addEventListener('voiceschanged', () => {
-    for(voice of speechSynthesis.getVoices()){
+    for(let voice of speechSynthesis.getVoices()){
       const option = document.createElement("option");
-      option.textContent = `${voices[i].name} (${voices[i].lang})`;
+      option.textContent = `${voice.name} (${voice.lang})`;
 
-      option.setAttribute("data-lang", voices[i].lang);
-      option.setAttribute("data-name", voices[i].name);
+      option.setAttribute("data-lang", voice.lang);
+      option.setAttribute("data-name", voice.name);
 
       document.getElementById("voice-select").appendChild(option);
     }
@@ -26,14 +26,19 @@ function init() {
   function speakText(event){
     const text = document.querySelector("textarea");
     const utterance = new SpeechSynthesisUtterance(text.value);
-    document.getElementById("voice-select").selectedOptions[0];
+    const selectedOption = document.getElementById("voice-select").selectedOptions[0].getAttribute("data-name");
+    for (let i = 0; i < voices.length; i++) {
+    if (voices[i].name === selectedOption) {
+      utterThis.voice = voices[i];
+    }
+  }
   
-    synth.speak(utterance);
+    speechSynthesis.speak(utterance);
   }
 
   function faceSwap(){
     const image = document.querySelector("img");
-    if(synth.speaking){
+    if(speechSynthesis.speaking){
       image.setAttribute("src", "/assets/images/smiling-open.png");
     }else{
       image.setAttribute("src", "/assets/images/smiling.png");
