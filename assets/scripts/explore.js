@@ -24,15 +24,15 @@ function init() {
   setInterval(faceSwap, 500);
 
   function speakText(event){
+    const voices = speechSynthesis.getVoices();
     const text = document.querySelector("textarea");
     const utterance = new SpeechSynthesisUtterance(text.value);
     const selectedOption = document.getElementById("voice-select").selectedOptions[0].getAttribute("data-name");
     for (let i = 0; i < voices.length; i++) {
-    if (voices[i].name === selectedOption) {
-      utterThis.voice = voices[i];
+      if (voices[i].name === selectedOption) {
+        utterance.voice = voices[i];
+      }
     }
-  }
-  
     speechSynthesis.speak(utterance);
   }
 
