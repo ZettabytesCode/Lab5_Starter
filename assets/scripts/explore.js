@@ -3,9 +3,11 @@
 window.addEventListener('DOMContentLoaded', init);
 
 
-
 function init() {
+
+
   const speechSynthesis = window.speechSynthesis;
+
   speechSynthesis.addEventListener('voiceschanged', () => {
     for(let voice of speechSynthesis.getVoices()){
       const option = document.createElement("option");
@@ -21,8 +23,6 @@ function init() {
   const speakButton = document.querySelector("button");
   speakButton.addEventListener('click', speakText);
 
-  setInterval(faceSwap, 500);
-
   function speakText(event){
     const voices = speechSynthesis.getVoices();
     const text = document.querySelector("textarea");
@@ -33,17 +33,20 @@ function init() {
         utterance.voice = voices[i];
       }
     }
+
+    utterance.onstart = (event) => {
+      const image = document.querySelector("img");
+      image.setAttribute("src", "/assets/images/smiling-open.png");
+    };
+
+    utterance.onend = (event) => {
+      const image = document.querySelector("img");
+      image.setAttribute("src", "/assets/images/smiling.png");
+    };
+
     speechSynthesis.speak(utterance);
   }
 
-  function faceSwap(){
-    const image = document.querySelector("img");
-    if(speechSynthesis.speaking){
-      image.setAttribute("src", "/assets/images/smiling-open.png");
-    }else{
-      image.setAttribute("src", "/assets/images/smiling.png");
-    }
-  }
 }
 
 
