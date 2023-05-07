@@ -36,12 +36,12 @@ function init() {
 
     utterance.onstart = (event) => {
       const image = document.querySelector("img");
-      image.setAttribute("src", "assets/images/smiling-open.png");
+      image.setAttribute("src", " assets/images/smiling-open.png");
     };
 
     utterance.onend = (event) => {
       const image = document.querySelector("img");
-      image.setAttribute("src", "assets/images/smiling.png");
+      image.setAttribute("src", " assets/images/smiling.png");
     };
 
     speechSynthesis.speak(utterance);
